@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>YOLO Object Detection</h1>
+
+        <label class="upload-btn">
+            <input type="file" id="imageUpload">
+            Choose an Image
+        </label>
+
+        <button onclick="uploadImage()">Detect Objects</button>
+
+        <div class="image-container">
+            <div>
+                <h2>Original Image</h2>
+                <img id="uploadedImage" src="#" class="hidden">
+            </div>
+            <div>
+                <h2>Detected Objects</h2>
+                <img id="processedImage" src="#" class="hidden">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function uploadImage() {
+            let input = document.getElementById("imageUpload");
+            let file = input.files[0];
+
+            if (!file) {
+                alert("Please select an image!");
+                return;
+            }
+
+            let formData = new FormData();
+            formData.append("image", file);
+
+            // Show uploaded image
+            let uploadedImage = document.getElementById("uploadedImage");
+            uploadedImage.src = URL.createObjectURL(file);
+            uploadedImage.classList.remove("hidden");
+
+            fetch("/upload", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.processed_image) {
+                    let processedImage = document.getElementById("processedImage");
+                    processedImage.src = data.processed_image;
+                    processedImage.classList.remove("hidden");
+                } else {
+                    alert("Detection failed!");
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</body>
+</html>

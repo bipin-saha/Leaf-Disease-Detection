@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  yolo-app:
+    build: .
+    ports:
+      - "5017:5017"
+    volumes:
+      - ./static/uploads:/app/static/uploads
+      - ./static/processed:/app/static/processed
+    environment:
+      - FLASK_ENV=production
+    restart: always  # Ensures the container restarts automatically

@@ -1,0 +1,4 @@
+ultralytics==8.3.80
+roboflow
+python-dotenv
+flask
