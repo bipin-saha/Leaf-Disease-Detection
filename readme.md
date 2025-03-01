@@ -45,7 +45,7 @@ Ensure you have the following installed:
 ### Clone Repository
 ```bash
 git clone https://github.com/bipin-saha/Leaf-Disease-Detection.git
-cd Leaf-Disease-Detection.git
+cd Leaf-Disease-Detection
 ```
 
 ### Create Conda Environment
